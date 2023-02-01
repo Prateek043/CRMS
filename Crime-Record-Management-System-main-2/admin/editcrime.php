@@ -26,23 +26,19 @@ $update=mysqli_fetch_assoc($query);
                 </div>
                     <div class="mb-3">
                 <label for="">Fir id</label>
-                    <input type="text" name="firid" placeholder="Fir Id" class="form-control" required value=<?=$update['firid']?> disabled>
+                    <input type="text" name="firid" placeholder="Fir Id" class="form-control" required value=<?=$update['firid']?> >
                 </div>
                     <div class="mb-3">
                         <label for="">Crime Type</label>
-                        <input type="text" name="crimetype" placeholder="Fir Type" class="form-control " required value=<?=$update['crimetype']?> disabled>
-                </div>
-                <div class="mb-3">
-                <label for="">Date Of Crime</label>
-                    <input type="date" name="dateofcrime" placeholder="Date of Crime" class="form-control" required>
+                        <input type="text" name="crimetype" placeholder="Fir Type" class="form-control " required value=<?=$update['crimetype']?> >
                 </div>
                 <div class="mb-3">
                 <label for="">Section</label>
-                    <input type="text" name="section" placeholder="Section" class="form-control" required >
+                    <input type="text" name="section" placeholder="Section" class="form-control" required value=<?=$update['section']?> >
                 </div>
                 <div class="form-group mb-3">
                     <label for="exampleFormControlTextarea1">Crime Description</label>
-                    <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="5"></textarea>
+                    <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="5" ></textarea>
                 </div>
                 <div class="mb-3">
                 <input type="submit" name="update" value="Update" class="btn btn-primary">
@@ -57,10 +53,11 @@ $update=mysqli_fetch_assoc($query);
 <?php include('footer.php');
 if(isset($_POST['update'])){
     $caseid=$_POST['caseid'];
-    $dateofcrime=$_POST['dateofcrime'];
+    $firid=$_POST['firid'];
+    $crimetype=$_POST['crimetype'];
     $section=$_POST['section'];
     $description=$_POST['description'];
-    $sql2="UPDATE `crime` SET `description`='$description' WHERE caseid=$caseid";
+    $sql2="UPDATE `crime` SET `caseid`=$caseid,`firid`=$firid,`crimetype`='$crimetype',`section`=$section,`description`='$description' WHERE caseid=$caseid";
     $query2=mysqli_query($con,$sql2);
     if($query2){
         $msg=['crime has been Updated successfully','alert-success'];

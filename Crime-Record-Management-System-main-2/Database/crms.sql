@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2023 at 02:30 PM
+-- Generation Time: Feb 01, 2023 at 04:38 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -48,21 +48,17 @@ INSERT INTO `crime` (`caseid`, `firid`, `crimetype`, `dateofcrime`, `section`, `
 (105, 5, 'Domestic', '2023-02-18', 303, 'It includes rape, sexual assault, insult to modesty, kidnapping, abduction, cruelty by intimate partner or relatives, trafficking, persecution for dowry, dowry deaths, indecency, and all other crimes listed in Indian Penal Code.'),
 (106, 6, 'Social', '2023-01-31', 181, 'Societal crime is defined as the total number of crimes committed by members of the society, or as the rate of these crimes. This definition is not self-evident. Other senses of the concept could be envisioned, such as the harm that these crimes cause to society.'),
 (107, 7, 'Cyber', '2023-01-28', 402, 'cyber crime '),
-(108, 8, 'Murder', '2023-01-30', 310, 'murder');
+(108, 8, 'Murder', '2023-02-01', 310, 'murder in the area of malad west');
 
 --
 -- Triggers `crime`
 --
 DELIMITER $$
-CREATE TRIGGER `deleteLog` AFTER DELETE ON `crime` FOR EACH ROW INSERT INTO logs VALUES(null,OLD.caseid,'Deleted',NOW())
+CREATE TRIGGER `insertlog` AFTER INSERT ON `crime` FOR EACH ROW INSERT INTO logs VALUES(null,NEW.caseid,NEW.firid,NEW.crimetype,NEW.description,'Inserted',NOW())
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insertLog` AFTER INSERT ON `crime` FOR EACH ROW INSERT INTO logs VALUES(null,NEW.caseid,'Inserted',NOW())
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `updateLog` AFTER UPDATE ON `crime` FOR EACH ROW INSERT INTO logs VALUES(null,NEW.caseid,'Updated',NOW())
+CREATE TRIGGER `updateLog` AFTER UPDATE ON `crime` FOR EACH ROW INSERT INTO logs VALUES(null,NEW.caseid,NEW.firid,NEW.crimetype,NEW.description,'Updated',NOW())
 $$
 DELIMITER ;
 
@@ -87,7 +83,7 @@ CREATE TABLE `criminal` (
 --
 
 INSERT INTO `criminal` (`criminalid`, `caseid`, `fname`, `lname`, `gender`, `age`, `image`) VALUES
-(1000, 101, 'Prateek', 'kumar', 'Male', 55, 'upload/images (2).jpeg'),
+(1000, 101, 'Prateek', 'kumar', 'Male', 55, 'upload/images (3).jpeg'),
 (1001, 102, 'Rahul', 'kumar', 'Male', 29, 'upload/images.jpeg'),
 (1002, 103, 'him', 'joy', 'Male', 19, 'upload/images (1).jpeg'),
 (1003, 104, 'Prateek', 'Chaudhary', 'Male', 19, 'upload/criminal1.jpeg'),
@@ -135,24 +131,21 @@ INSERT INTO `fir` (`firid`, `firtype`, `firdate`, `location`, `firdesc`, `state`
 
 CREATE TABLE `logs` (
   `id` int(11) NOT NULL,
-  `authorid` int(11) NOT NULL,
-  `action` varchar(50) NOT NULL,
-  `date` datetime NOT NULL
+  `caseid` int(11) NOT NULL,
+  `firid` int(11) NOT NULL,
+  `crimetype` varchar(200) NOT NULL,
+  `description` longtext NOT NULL,
+  `action` varchar(20) NOT NULL,
+  `cdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `logs`
 --
 
-INSERT INTO `logs` (`id`, `authorid`, `action`, `date`) VALUES
-(1, 104, 'Inserted', '2023-01-23 02:43:26'),
-(2, 104, 'Updated', '2023-01-23 02:44:21'),
-(3, 104, 'Deleted', '2023-01-23 02:44:35'),
-(4, 104, 'Inserted', '2023-01-28 19:44:13'),
-(5, 105, 'Inserted', '2023-02-01 15:21:32'),
-(6, 106, 'Inserted', '2023-02-01 16:46:50'),
-(7, 107, 'Inserted', '2023-02-01 18:36:45'),
-(8, 108, 'Inserted', '2023-02-01 18:52:10');
+INSERT INTO `logs` (`id`, `caseid`, `firid`, `crimetype`, `description`, `action`, `cdate`) VALUES
+(1, 108, 8, 'Murder', 'murder in the malad area of mumbai west', 'Updated', '2023-02-01 20:57:08'),
+(2, 108, 8, 'Murder', 'murder in the area of malad west', 'Updated', '2023-02-01 21:02:28');
 
 -- --------------------------------------------------------
 
@@ -176,7 +169,7 @@ CREATE TABLE `punishment` (
 
 INSERT INTO `punishment` (`punishmentid`, `criminalid`, `firid`, `crimetype`, `section`, `punishment`, `status`) VALUES
 (1, 1000, 1, 'Cyber', 303, 'Prision for 10 year in cental jail of Pune.', 1),
-(2, 1001, 2, 'Social', 101, '10 year jail', 1),
+(2, 1001, 2, 'Social', 101, '15 year of jail\r\n', 1),
 (3, 1002, 3, 'Domestic', 700, 'hang to death', 1),
 (4, 1003, 4, 'Kidnapping', 310, 'imprisionment ', 1),
 (12, 1004, 5, 'Domestic', 303, 'jail for 10 years', 1),
@@ -272,7 +265,7 @@ ALTER TABLE `fir`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `punishment`

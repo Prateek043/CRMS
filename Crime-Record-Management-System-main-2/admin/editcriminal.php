@@ -30,19 +30,19 @@ $update=mysqli_fetch_assoc($query);
                 </div>
                     <div class="mb-3">
                         <label for="">First Name</label>
-                    <input type="text" name="fname" placeholder="First Name" class="form-control" required  >
+                    <input type="text" name="fname" placeholder="First Name" class="form-control" value=<?=$update['fname']?> required  >
                 </div>
                 <div class="mb-3">
                         <label for="">Last Name</label>
-                    <input type="text" name="lname" placeholder="Last Name" class="form-control" required  >
+                    <input type="text" name="lname" placeholder="Last Name" class="form-control" value=<?=$update['lname']?> required  >
                 </div>
                 <div class="mb-3">
                 <label for="">Gender</label>
-                    <input type="text" name="gender" placeholder="Gender" class="form-control" required >
+                    <input type="text" name="gender" placeholder="Gender" class="form-control" value=<?=$update['gender']?> required >
                 </div>
                 <div class="mb-3">
                 <label for="">Age</label>
-                    <input type="text" name="age" placeholder="Age" class="form-control" required >
+                    <input type="text" name="age" placeholder="Age" class="form-control" value=<?=$update['age']?> required >
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Image</label>
